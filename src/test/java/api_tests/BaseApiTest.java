@@ -9,9 +9,9 @@ import static io.restassured.RestAssured.given;
 
 
 public class BaseApiTest {
-    private static final String BASE_URL = "https://ayqa241.testrail.io/";
-    private static final String USERNAME = "ayqa24@mailinator.com";
-    private static final String PASSWORD = "Ayqa241!";
+    private static final String BASE_URL = "https://ibay.testrail.io/";
+    private static final String USERNAME = "ilyab.sumo@gmail.com";
+    private static final String PASSWORD = "Aa12345@";
 
 
     @BeforeTest

@@ -59,7 +59,6 @@ public abstract class BaseTest {
         addProjectPage = new AddProjectPage(driver);
 
     }
-
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         driver.quit();

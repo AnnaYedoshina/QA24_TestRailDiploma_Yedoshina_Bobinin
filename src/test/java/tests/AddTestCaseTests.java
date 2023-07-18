@@ -28,7 +28,5 @@ public class AddTestCaseTests extends BaseTest {
         Assert.assertTrue(addedTestCasePage.isAddAnotherLinkDisplayed());
         TestCase expectedTestCase = testCaseInfoPage.getTestCaseInfo();
         Assert.assertEquals(expectedTestCase, actualTestCase);
-
-
     }
 }
