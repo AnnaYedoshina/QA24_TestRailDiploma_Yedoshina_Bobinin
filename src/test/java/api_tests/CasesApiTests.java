@@ -52,7 +52,7 @@ public class CasesApiTests extends BaseApiTest {
 
     @Test
     public void addTestCase() {
-        TestCase expectedTestCase = TestCase.builder().setTitle("This is new testcase")
+        TestCase expectedTestCase = TestCase.builder().setTitle(title)
                 .setEstimate("3m")
                 .build();
         TestCase actualTestCase = given()
@@ -70,7 +70,7 @@ public class CasesApiTests extends BaseApiTest {
     @Test
     public void getTestCase() {
         TestCase expectedTestCase = TestCase.builder()
-                .setTitle("This is new testcase")
+                .setTitle(title)
                 .setEstimate("3m")
                 .build();
         TestCase actualTestCase = given()
