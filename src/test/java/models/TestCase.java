@@ -13,6 +13,7 @@ import lombok.ToString;
 @Getter
 public class TestCase {
     private String title;
+    @SerializedName("section_id")
     @EqualsAndHashCode.Exclude
     private String section;
     @EqualsAndHashCode.Exclude

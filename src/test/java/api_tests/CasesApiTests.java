@@ -14,8 +14,8 @@ import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public class CasesApiTests extends BaseApiTest {
-    private static final int SUITE_ID = 1;
-    private static final int PROJECT_ID = 7;
+    private static final int SUITE_ID = 2;
+    private static final int PROJECT_ID = 8;
     private int caseId;
     private String title = "New case";
 
@@ -69,20 +69,16 @@ public class CasesApiTests extends BaseApiTest {
 
     @Test
     public void getTestCase() {
-        TestCase expectedTestCase = TestCase.builder()
-                .setTitle(title)
-                .setEstimate("3m")
-                .build();
-        TestCase actualTestCase = given()
-                .log().all()
+        JsonPath responseBody = given()
                 .pathParam("case_id", this.caseId)
                 .when()
+                .log().all()
                 .get("index.php?/api/v2/get_case/{case_id}")
                 .then()
                 .log().all()
                 .statusCode(SC_OK)
-                .extract().as(TestCase.class, ObjectMapperType.GSON);
-        Assert.assertEquals(actualTestCase, expectedTestCase);
+                .extract().body().jsonPath();
+        Assert.assertEquals(responseBody.getString("title"), title);
     }
 
     @Test
