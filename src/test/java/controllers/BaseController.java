@@ -19,43 +19,4 @@ public class BaseController {
                 .auth().preemptive().basic(USERNAME, PASSWORD)
                 .header(HTTP.CONTENT_TYPE, ContentType.JSON);
     }
-    public String post(String url, String body) {
-        String response = given()
-                .body(body)
-                .when()
-                .post(url)
-                .then().log().body().
-                extract().body().asString();
-        return response;
-    }
-
-    public void delete(String url, int expectedStatusCode) {
-        given()
-                .when()
-                .post(url)
-                .then()
-                .log().body().
-                statusCode(expectedStatusCode);
-    }
-
-    public String get(String url) {
-        String body =
-                given()
-                        .when()
-                        .get(url)
-                        .then()
-                        .log().body()
-                        .extract().body().asString();
-        return body;
-    }
-
-    public void put(String body, String url, int expectedStatusCode) {
-        given()
-                .body(body)
-                .when()
-                .post(url)
-                .then()
-                .log().body()
-                .statusCode(expectedStatusCode);
-    }
 }
