@@ -1,0 +1,20 @@
+{
+  "title": "This is a test case 2",
+  "type_id": 2,
+  "priority_id": 4,
+  "estimate": "3m",
+  "refs": "RF-1, RF-2",
+  "custom_steps_separated": [
+    {
+      "content": "Step 1",
+      "expected": "Expected Result 1"
+    },
+    {
+      "content": "Step 2",
+      "expected": "Expected Result 2"
+    },
+    {
+      "shared_step_id": 3
+    }
+  ]
+}
