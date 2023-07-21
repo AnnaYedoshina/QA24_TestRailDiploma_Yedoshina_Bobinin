@@ -1,5 +1,11 @@
 package tests;
 
+import api_tests.BaseApiTest;
+import com.google.gson.JsonObject;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
+import org.apache.http.protocol.HTTP;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,15 +15,19 @@ import org.testng.ITestContext;
 import org.testng.annotations.*;
 import pages.*;
 import utils.InvokedListener;
+import utils.PropertyReader;
 
 import java.time.Duration;
 
+import static io.restassured.RestAssured.given;
+import static org.apache.http.HttpStatus.SC_OK;
+
 @Listeners({InvokedListener.class})
-public abstract class BaseTest {
-    private final static String BASE_URL = "https://ibay.testrail.io/";
-    protected final static String USERNAME = "ilyab.sumo@gmail.com";
+public abstract class BaseTest extends BaseApiTest {
+    protected static final String BASE_URL = PropertyReader.getProperty("base_url");
+    protected static final String USERNAME = PropertyReader.getProperty("username");
+    protected static final String PASSWORD = PropertyReader.getProperty("password");
     protected final static String WRONG_USERNAME = "ayqa245@mailinator.com";
-    protected final static String PASSWORD = "Aa12345@";
     protected final static String WRONG_PASSWORD = "Ayqa2414!";
     protected WebDriver driver;
     protected WebDriverWait wait;
@@ -32,6 +42,8 @@ public abstract class BaseTest {
     protected TestCaseInfoPage testCaseInfoPage;
     protected MilestonesPage milestonesPage;
     protected AddProjectPage addProjectPage;
+    protected final static String NAME = "TestProject";
+    private int projectId;
 
     @Parameters({"browserName"})
     @BeforeClass(alwaysRun = true)
@@ -59,6 +71,7 @@ public abstract class BaseTest {
         addProjectPage = new AddProjectPage(driver);
 
     }
+
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         driver.quit();

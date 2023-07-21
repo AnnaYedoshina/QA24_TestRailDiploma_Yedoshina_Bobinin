@@ -19,9 +19,8 @@ public class AddTestCaseTests extends BaseTest {
                 .setSteps("Заполнить поле email. Заполнить поле password. Нажать кнопку login")
                 .setExpectedResult("Пользователь авторизован")
                 .build();
-        String projectName = "AnnaYedoshinaQA24";
         loginPage.logIn(USERNAME, PASSWORD);
-        allProjectsPage.openProjectByName(projectName);
+        allProjectsPage.openProjectByName(NAME);
         projectPage.clickAddTestCasesLink();
         addTestCasePage.fillingOutTestCase(actualTestCase);
         addTestCasePage.clickAddTestCaseButton();

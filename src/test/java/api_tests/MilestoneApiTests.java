@@ -33,6 +33,7 @@ public class MilestoneApiTests extends BaseApiTest {
         this.milestoneId = responseBody.getInt("milestone_id");
 
     }
+
     @Test
     public void getMilestone() {
         JsonPath responseBody = given()
@@ -113,6 +114,7 @@ public class MilestoneApiTests extends BaseApiTest {
                 .then()
                 .log().all()
                 .statusCode(SC_OK);
-    }
 
+
+    }
 }

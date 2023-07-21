@@ -9,26 +9,22 @@ import org.openqa.selenium.WebDriver;
 @Log4j2
 public class AllProjectsPage extends BasePage {
 
-    String projectName = "AnnaYedoshinaQA24";
+    String projectName = "TestProject";
 
     public AllProjectsPage(WebDriver driver) {
         super(driver);
     }
 
-    public By testCasesLink = By.xpath("//*[@class = 'link' and contains(./text(), 'Test Cases')]");
+    public String addMilestoneButtonId = "navigation-overview-addmilestones";
     public By projectLinkLocator = (By.xpath(String.format("//a[text() = '%s']", projectName)));
 
-    public String addProjectButtonId = "navigation-empty-addproject";
+    public String addProjectButtonId = "sidebar-projects-add";
 
     @Step
-    public boolean isTestCasesLinkDisplayed() {
-        return driver.findElement(testCasesLink).isDisplayed();
+    public boolean isAddProjectButtonDisplayed() {
+        return driver.findElement(By.id(addProjectButtonId)).isDisplayed();
     }
 
-    @Step
-    public void clickTestCasesLink() {
-        new Button(driver, testCasesLink).click();
-    }
 
     @Step
     public void openProjectByName(String projectName) {

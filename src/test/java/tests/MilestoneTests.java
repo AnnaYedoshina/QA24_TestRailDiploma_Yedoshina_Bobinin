@@ -13,9 +13,8 @@ public class MilestoneTests extends BaseTest {
                 .setReferences("qwe")
                 .setDescription("first milestone")
                 .build();
-        String projectName = "AnnaYedoshinaQA24";
         loginPage.logIn(USERNAME, PASSWORD);
-        allProjectsPage.openProjectByName(projectName);
+        allProjectsPage.openProjectByName(NAME);
         projectPage.clickAddMilestoneButton();
         addMilestonePage.fillMilestone(milestone);
         addMilestonePage.checkCompletedMilestoneCheckbox();

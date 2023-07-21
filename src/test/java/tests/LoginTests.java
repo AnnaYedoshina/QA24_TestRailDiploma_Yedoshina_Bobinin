@@ -18,7 +18,7 @@ public class LoginTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     public void positiveLoginTest() {
         loginPage.logIn(USERNAME, PASSWORD);
-        Assert.assertTrue(allProjectsPage.isTestCasesLinkDisplayed());
+        Assert.assertTrue(allProjectsPage.isAddProjectButtonDisplayed());
     }
 
     @DataProvider
