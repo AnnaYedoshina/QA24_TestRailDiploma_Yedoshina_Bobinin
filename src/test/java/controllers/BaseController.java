@@ -9,6 +9,8 @@ import utils.PropertyReader;
 import static io.restassured.RestAssured.given;
 
 public class BaseController {
+    public static final String BASE_URL_API = System.getenv().getOrDefault("TESTRAIL_API_URL",
+            PropertyReader.getProperty("testrail.apiurl"));
     protected static final String BASE_URL = System.getProperty("base_url", PropertyReader.getProperty("base_url"));
     protected static final String USERNAME = System.getProperty("username", PropertyReader.getProperty("username"));
     protected static final String PASSWORD = System.getProperty("password", PropertyReader.getProperty("password"));

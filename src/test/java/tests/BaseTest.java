@@ -29,6 +29,7 @@ public abstract class BaseTest extends BaseApiTest {
     protected static final String PASSWORD = PropertyReader.getProperty("password");
     protected final static String WRONG_USERNAME = "ayqa245@mailinator.com";
     protected final static String WRONG_PASSWORD = "Ayqa2414!";
+    protected final static String NAME = "TestProject";
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected LoginPage loginPage;
@@ -42,8 +43,6 @@ public abstract class BaseTest extends BaseApiTest {
     protected TestCaseInfoPage testCaseInfoPage;
     protected MilestonesPage milestonesPage;
     protected AddProjectPage addProjectPage;
-    protected final static String NAME = "TestProject";
-    private int projectId;
 
     @Parameters({"browserName"})
     @BeforeClass(alwaysRun = true)

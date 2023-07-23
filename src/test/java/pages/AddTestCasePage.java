@@ -20,11 +20,11 @@ public class AddTestCasePage extends BasePage {
     private String preconditionsInputId = "custom_preconds_display";
     private String stepsInputId = "custom_steps_display";
     private String expectedResultInputId = "custom_expected_display";
-    private By sectionDropdownLocator = By.id("section_id_chzn");
-    private By templateDropdownLocator = By.id("template_id_chzn");
+    private String sectionDropdownId = "section_id_chzn";
+    private String templateDropdownId = "template_id_chzn";
     private String typeDropdownId = "type_id_chzn";
-    private By priorityDropdownLocator = By.xpath("//div[@id = 'priority_id_chzn']");
-    private By estimateInputLocator = By.cssSelector("input[name = estimate]");
+    private String priorityDropdownId = "priority_id_chzn";
+    private String estimateInputId = "estimate";
     private String referencesInputId = "refs";
     private String automationTypeDropdownId = "custom_automation_type_chzn";
     private String addTestCaseButtonId = "accept";
@@ -38,11 +38,11 @@ public class AddTestCasePage extends BasePage {
     public void fillingOutTestCase(TestCase testCase) {
         log.info(String.format("Filling out testCase = %s", testCase));
         new Input(driver, titleInputId).setValue(testCase.getTitle());
-        new Dropdown(driver, sectionDropdownLocator).selectOptionByText(testCase.getSection().toString(), false);
-        new Dropdown(driver, templateDropdownLocator).selectOptionByText(testCase.getTemplate(), false);
+        new Dropdown(driver, sectionDropdownId).selectOptionByText(testCase.getSection().toString(), false);
+        new Dropdown(driver, templateDropdownId).selectOptionByText(testCase.getTemplate(), false);
         new Dropdown(driver, typeDropdownId).selectOptionByText(testCase.getType(), false);
-        new Dropdown(driver, priorityDropdownLocator).selectOptionByText(testCase.getPriority().toString(), false);
-        new Input(driver, estimateInputLocator).setValue(testCase.getEstimate());
+        new Dropdown(driver, priorityDropdownId).selectOptionByText(testCase.getPriority().toString(), false);
+        new Input(driver, estimateInputId).setValue(testCase.getEstimate());
         new Input(driver, referencesInputId).setValue(testCase.getReferences());
         new Dropdown(driver, automationTypeDropdownId).selectOptionByText(testCase.getAutomationType(), false);
         new Input(driver, preconditionsInputId).setValue(testCase.getPreconditions());

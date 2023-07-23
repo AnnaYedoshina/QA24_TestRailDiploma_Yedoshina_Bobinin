@@ -13,7 +13,6 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 public class MilestoneApiTests extends BaseApiTest {
     private final static String NAME = "Release 1.0";
-    private int projectId;
     private int milestoneId;
 
     @BeforeTest
@@ -56,7 +55,7 @@ public class MilestoneApiTests extends BaseApiTest {
                 .setReferences("RF-1")
                 .build();
         Milestone actualMilestone = given()
-                .pathParam("project_id", 7)
+                .pathParam("project_id", projectId)
                 .body(expectedMilestone, ObjectMapperType.GSON)
                 .when()
                 .post("index.php?/api/v2/add_milestone/{project_id}")
@@ -75,7 +74,7 @@ public class MilestoneApiTests extends BaseApiTest {
                 .setReferences("RF-1")
                 .build();
         given()
-                .pathParam("project_id", 7)
+                .pathParam("project_id", projectId)
                 .body(milestone, ObjectMapperType.GSON)
                 .when()
                 .post("index.php?/api/v2/add_milestone/{project_id}")

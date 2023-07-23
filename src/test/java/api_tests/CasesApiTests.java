@@ -1,8 +1,11 @@
 package api_tests;
 
-import com.google.gson.JsonObject;
+import com.github.javafaker.Faker;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import models.Section;
+import models.Case;
 import models.TestCase;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -14,43 +17,33 @@ import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public class CasesApiTests extends BaseApiTest {
-    private static final int SUITE_ID = 2;
-    private static final int PROJECT_ID = 8;
-    private int caseId;
-    private String title = "New case";
-
+    private static final int SUITE_ID = 1;
+    protected int caseId;
+    protected String title = "Test testCase";
+    protected int sectionId;
+    static Faker faker = new Faker();
     @BeforeTest
     public void addNewTestCase() {
-        JsonObject requestBody = new JsonObject();
-        requestBody.addProperty("title", title);
-        JsonPath responseBody = given()
-                .body(requestBody.toString())
-                .pathParam("suite_id", SUITE_ID)
-                .when()
-                .log().all()
-                .post("index.php?/api/v2/add_case/{suite_id}")
-                .then()
-                .log().all()
-                .statusCode(SC_OK)
-                .extract().body().jsonPath();
-        this.caseId = responseBody.getInt("id");
+        Section section = Section.builder()
+                .setName("Test section")
+                .setDescription("Our test section")
+                .setParentId("")
+                .setSuiteId(SUITE_ID)
+                .build();
+        Response response = sectionController.addSection(section, projectId);
+        sectionId = response.getBody().jsonPath().getInt("id");
+        Case testCase = Case.builder()
+                .setTitle(title)
+                .setEstimate("2m")
+                .setTypeId(faker.random().nextInt(1, 4))
+                .setPriorityId(faker.random().nextInt(1, 4))
+                .setTemplateId(faker.random().nextInt(1, 3))
+                .setSectionId(sectionId)
+                .build();
+        Response responseCase = casesController.addTestCase(testCase, sectionId);
+        caseId = responseCase.getBody().jsonPath().getInt("id");
     }
-
-    @Test
-    public void addTestCaseFromFile() {
-        File file = new File(System.getProperty("user.dir") + "/src/test/resources/requestCaseBody.json");
-        given()
-                .pathParam("suite_id", SUITE_ID)
-                .body(file)
-                .when()
-                .post("index.php?/api/v2/add_case/{suite_id}")
-                .then()
-                .log().all()
-                .statusCode(SC_OK);
-
-    }
-
-    @Test
+    @Test(priority = 1)
     public void addTestCase() {
         TestCase expectedTestCase = TestCase.builder().setTitle(title)
                 .setEstimate("3m")
@@ -67,7 +60,7 @@ public class CasesApiTests extends BaseApiTest {
         Assert.assertEquals(expectedTestCase, actualTestCase);
     }
 
-    @Test
+    @Test(priority = 2)
     public void getTestCase() {
         JsonPath responseBody = given()
                 .pathParam("case_id", this.caseId)
@@ -81,7 +74,7 @@ public class CasesApiTests extends BaseApiTest {
         Assert.assertEquals(responseBody.getString("title"), title);
     }
 
-    @Test
+    @Test(priority = 3)
     public void updateTestCase() {
         TestCase expectedTestCase = TestCase.builder().setTitle("This is updated testcase")
                 .setEstimate("3m")
@@ -98,32 +91,11 @@ public class CasesApiTests extends BaseApiTest {
         Assert.assertEquals(expectedTestCase, actualTestCase);
 
     }
+    @Test(priority = 4)
+    public void deleteNewTestCase() {
+        Response response = casesController.deleteTestCase(caseId);
+        Assert.assertEquals(response.getStatusCode(),200);
 
-    @Test
-    public void deleteTestCase() {
-        given()
-                .pathParam("case_id", caseId)
-                .log().all()
-                .when()
-                .post("index.php?/api/v2/delete_case/{case_id}")
-                .then()
-                .log().all()
-                .statusCode(SC_OK);
-    }
-
-    @Test
-    public void getTestCases() {
-        JsonPath responseBody = given()
-                .pathParam("suite_id", SUITE_ID)
-                .when()
-                .log().all()
-                .get("index.php?/api/v2/get_cases/{suite_id}")
-                .then()
-                .log().all()
-                .statusCode(SC_OK)
-                .extract().body().jsonPath();
-        int size = responseBody.getInt("size");
-        Assert.assertEquals(responseBody.getInt("size"), size);
     }
 
 }
