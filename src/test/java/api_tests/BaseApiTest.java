@@ -1,5 +1,6 @@
 package api_tests;
 
+import controllers.MilestoneController;
 import controllers.ProjectController;
 import controllers.SectionController;
 import controllers.CasesController;
@@ -23,12 +24,11 @@ public class BaseApiTest {
     protected static final String USERNAME = System.getProperty("username", PropertyReader.getProperty("username"));
     protected static final String PASSWORD = System.getProperty("password", PropertyReader.getProperty("password"));
     protected int projectId;
-    protected int suiteId;
 
     ProjectController projectController = new ProjectController();
     SectionController sectionController = new SectionController();
     CasesController casesController = new CasesController();
-    //SuiteController suiteController = new SuiteController();
+    MilestoneController milestoneController = new MilestoneController();
 
 
     @BeforeSuite

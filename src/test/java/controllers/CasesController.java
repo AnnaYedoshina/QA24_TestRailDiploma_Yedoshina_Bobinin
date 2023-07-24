@@ -57,15 +57,5 @@ public class CasesController extends BaseController {
                 .extract().response();
     }
 
-//    public Response addTestCase(File case) {
-//        return given()
-//                .body(case)
-//                .when()
-//                .post("/index.php?/api/v2/add_project")
-//                .then()
-//                .log().all()
-//                .extract().response();
-
-
     }
 
