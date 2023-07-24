@@ -1,22 +1,22 @@
 package pages;
 
+import com.sun.jdi.NativeMethodException;
 import elements.Button;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 @Log4j2
 public class AllProjectsPage extends BasePage {
-
-    String projectName = "TestProject";
 
     public AllProjectsPage(WebDriver driver) {
         super(driver);
     }
 
     public String addMilestoneButtonId = "navigation-overview-addmilestones";
-    public By projectLinkLocator = (By.xpath(String.format("//a[text() = '%s']", projectName)));
+    public By projectLinkLocator = (By.xpath(String.format("//a[text() = '%s'")));
 
     public String addProjectButtonId = "sidebar-projects-add";
 
@@ -37,5 +37,6 @@ public class AllProjectsPage extends BasePage {
         new Button(driver, addProjectButtonId).click();
 
     }
-
 }
+
+

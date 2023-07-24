@@ -12,8 +12,8 @@ public class LoginTests extends BaseTest {
 
     private String expectedErrorText = "Email/Login or Password is incorrect. Please try again.";
 
-    @Test(groups = {"smoke"}, description = "Тестирование формы Login")
-    @Description("Позитивный тест")
+    @Test(groups = {"smoke"}, description = "Positive LoginForm test")
+    @Description("Positive login test")
     @Link(name = "Login page", type = "href", url = "https://ibay.testrail.io/")
     @Severity(SeverityLevel.CRITICAL)
     public void positiveLoginTest() {
@@ -29,8 +29,8 @@ public class LoginTests extends BaseTest {
         };
     }
 
-    @Test(groups = {"smoke"}, description = "Негативное тестирование формы Login", dataProvider = "negativeLoginTestData")
-    @Description("2 негативных теста формы Login")
+    @Test(groups = {"smoke"}, description = "Negative LoginForm test", dataProvider = "negativeLoginTestData")
+    @Description("2 negative login tests")
     @Severity(SeverityLevel.CRITICAL)
     public void negativeLoginTestData(String username, String password, String expectedErrorMessage) {
         loginPage.logIn(username, password);
@@ -38,8 +38,8 @@ public class LoginTests extends BaseTest {
 
     }
 
-    @Test(groups = {"smoke"}, description = "Негативное тестирование формы Login")
-    @Description("Ввод неверного Email в форму Login")
+    @Test(groups = {"smoke"}, description = "Negative LoginForm test with wrong email")
+    @Description("Invalid email test")
     @Severity(SeverityLevel.CRITICAL)
     public void negativeLoginTestWrongEmail() {
         loginPage.logIn(WRONG_USERNAME, PASSWORD);
@@ -47,8 +47,8 @@ public class LoginTests extends BaseTest {
 
     }
 
-    @Test(groups = {"smoke"}, description = "Негативное тестирование формы Login")
-    @Description("Ввод неверного Password в форму Login")
+    @Test(groups = {"smoke"}, description = "Negative LoginForm test with wrong password")
+    @Description("Invalid password test")
     @Severity(SeverityLevel.CRITICAL)
     public void negativeLoginTestWrongPassword() {
         loginPage.logIn(USERNAME, WRONG_PASSWORD);
