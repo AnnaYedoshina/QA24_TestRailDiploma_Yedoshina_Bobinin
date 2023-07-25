@@ -16,7 +16,7 @@ public class AllProjectsPage extends BasePage {
     }
 
     public String addMilestoneButtonId = "navigation-overview-addmilestones";
-    public By projectLinkLocator = (By.xpath(String.format("//a[text() = '%s'")));
+    public String projectLinkLocator = "//a[text() = '%s']";
 
     public String addProjectButtonId = "sidebar-projects-add";
 
@@ -29,7 +29,7 @@ public class AllProjectsPage extends BasePage {
     @Step
     public void openProjectByName(String projectName) {
         log.info(String.format("Opening project by name = %s", projectName));
-        new Button(driver, projectLinkLocator).click();
+        new Button(driver, By.xpath(String.format(projectLinkLocator, projectName))).click();
     }
 
     @Step
