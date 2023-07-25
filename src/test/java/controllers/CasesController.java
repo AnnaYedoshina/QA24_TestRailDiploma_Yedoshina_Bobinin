@@ -3,6 +3,9 @@ package controllers;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
 import models.Case;
+import models.TestCase;
+
+import java.io.File;
 
 import static io.restassured.RestAssured.given;
 
@@ -31,10 +34,10 @@ public class CasesController extends BaseController {
                 .extract().response();
     }
 
-    public Response updateTestCase(Case testCase, int caseId) {
+    public Response updateTestCase(TestCase testCase, int caseId) {
         return given()
                 .body(testCase, ObjectMapperType.GSON)
-                .pathParam("case_id", caseId)
+                .pathParam("project_id", caseId)
                 .when()
                 .post("/index.php?/api/v2/update_case/{case_id}")
                 .then()
@@ -54,5 +57,5 @@ public class CasesController extends BaseController {
                 .extract().response();
     }
 
-}
+    }
 
