@@ -2,13 +2,11 @@ package controllers;
 
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
-import models.Project;
 import models.Section;
 
 import static io.restassured.RestAssured.given;
 
-public class SectionController extends BaseController{
-
+public class SectionController extends BaseController {
 
 
     public Response addSection(Section section, int projectId) {
@@ -21,6 +19,7 @@ public class SectionController extends BaseController{
                 .log().all()
                 .extract().response();
     }
+
     public Response getSection(int sectionId) {
         return given()
                 .pathParam("section_id", sectionId)
@@ -33,6 +32,7 @@ public class SectionController extends BaseController{
                 .extract().response();
 
     }
+
     public Response updateSection(Section section, int sectionId) {
         return given()
                 .body(section, ObjectMapperType.GSON)

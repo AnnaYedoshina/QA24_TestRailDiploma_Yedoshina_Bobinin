@@ -19,6 +19,7 @@ public class Button {
         this.element = new MyElement(driver, By.id(id));
     }
 
+
     public void click() {
         element.click();
     }

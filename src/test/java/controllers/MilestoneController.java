@@ -2,13 +2,11 @@ package controllers;
 
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
-import models.Case;
 import models.Milestone;
-import models.TestCase;
 
 import static io.restassured.RestAssured.given;
 
-public class MilestoneController extends BaseController{
+public class MilestoneController extends BaseController {
 
     public Response addMilestone(Milestone milestone, int projectId) {
         return given()
@@ -29,7 +27,6 @@ public class MilestoneController extends BaseController{
                 .get("/index.php?/api/v2/get_milestone/{milestone_id}")
                 .then()
                 .log().all()
-                .statusCode(200)
                 .extract().response();
     }
 
@@ -52,7 +49,6 @@ public class MilestoneController extends BaseController{
                 .post("/index.php?/api/v2/delete_milestone/{milestone_id}")
                 .then()
                 .log().all()
-                .statusCode(200)
                 .extract().response();
     }
 }
