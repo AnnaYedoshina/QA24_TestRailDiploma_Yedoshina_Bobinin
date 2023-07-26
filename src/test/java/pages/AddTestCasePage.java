@@ -8,52 +8,56 @@ import lombok.extern.log4j.Log4j2;
 import models.TestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class AddTestCasePage extends BasePage {
     public AddTestCasePage(WebDriver driver) {
         super(driver);
+
     }
 
-    private String acceptAndNextButtonId = "accept_and_next";
-    private String titleInputId = "title";
-    private String preconditionsInputId = "custom_preconds_display";
-    private String stepsInputId = "custom_steps_display";
-    private String expectedResultInputId = "custom_expected_display";
-    private String sectionDropdownId = "section_id_chzn";
-    private String templateDropdownId = "template_id_chzn";
-    private String typeDropdownId = "type_id_chzn";
-    private String priorityDropdownId = "priority_id_chzn";
-    private String estimateInputId = "estimate";
-    private String referencesInputId = "refs";
-    private String automationTypeDropdownId = "custom_automation_type_chzn";
-    private String addTestCaseButtonId = "accept";
+    private static final By TITLE = By.id("title");
+    private static final By ESTIMATE = By.id("estimate");
+    private static final By REFERENCES = By.id("refs");
+    private static final By PRECONDITIONS = By.id("custom_preconds_display");
+    private static final By STEPS = By.id("custom_steps_display");
+    private static final By EXPECTED_RESULT = By.id("custom_expected_display");
+    private static final By ADD_CASE_BUTTON = By.id("accept");
+    private static final By SECTION = By.id("section_id_chzn");
+    private static final By TEMPLATE = By.id("template_id_chzn");
+    private static final By TYPE = By.id("type_id_chzn");
+    private static final By PRIORITY = By.id("priority_id_chzn");
+    private static final By AUTOMATION_TYPE = By.id("custom_automation_type_chzn");
+    private By errorMessageLocator = By.xpath("//div[@class = 'message message-error']");
 
-    @Step
-    public boolean isAcceptAndNextButtonDisplayed() {
-        return driver.findElement(By.id(acceptAndNextButtonId)).isDisplayed();
-    }
-
-    @Step
+    @Step("Filling out test case '{testCase.title}'")
     public void fillingOutTestCase(TestCase testCase) {
         log.info(String.format("Filling out testCase = %s", testCase));
-        new Input(driver, titleInputId).setValue(testCase.getTitle());
-        new Dropdown(driver, sectionDropdownId).selectOptionByText(testCase.getSection().toString(), false);
-        new Dropdown(driver, templateDropdownId).selectOptionByText(testCase.getTemplate(), false);
-        new Dropdown(driver, typeDropdownId).selectOptionByText(testCase.getType(), false);
-        new Dropdown(driver, priorityDropdownId).selectOptionByText(testCase.getPriority().toString(), false);
-        new Input(driver, estimateInputId).setValue(testCase.getEstimate());
-        new Input(driver, referencesInputId).setValue(testCase.getReferences());
-        new Dropdown(driver, automationTypeDropdownId).selectOptionByText(testCase.getAutomationType(), false);
-        new Input(driver, preconditionsInputId).setValue(testCase.getPreconditions());
-        new Input(driver, stepsInputId).setValue(testCase.getSteps());
-        new Input(driver, expectedResultInputId).setValue(testCase.getExpectedResult());
+        new Input(driver, TITLE).setValue(testCase.getTitle());
+        new Dropdown(driver, SECTION).selectOptionByText(testCase.getSection().toString(), false);
+        new Dropdown(driver, TEMPLATE).selectOptionByText(testCase.getTemplate(), false);
+        new Dropdown(driver, TYPE).selectOptionByText(testCase.getType(), false);
+        new Dropdown(driver, PRIORITY).selectOptionByText(testCase.getPriority().toString(), false);
+        new Input(driver, ESTIMATE).setValue(testCase.getEstimate());
+        new Input(driver, REFERENCES).setValue(testCase.getReferences());
+        new Dropdown(driver, AUTOMATION_TYPE).selectOptionByText(testCase.getAutomationType(), false);
+        new Input(driver, PRECONDITIONS).setValue(testCase.getPreconditions());
+        new Input(driver, STEPS).setValue(testCase.getSteps());
+        new Input(driver, EXPECTED_RESULT).setValue(testCase.getExpectedResult());
     }
 
     @Step
     public void clickAddTestCaseButton() {
         log.info("Clicking addTestCaseButton");
-        new Button(driver, addTestCaseButtonId).click();
+        new Button(driver, ADD_CASE_BUTTON).click();
+    }
+
+    @Step
+    public String gerErrorMessageText() {
+        log.info("Searching for error message");
+        return driver.findElement(errorMessageLocator).getText();
+
     }
 
 }

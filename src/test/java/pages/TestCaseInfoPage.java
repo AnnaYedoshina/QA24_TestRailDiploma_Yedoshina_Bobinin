@@ -1,5 +1,6 @@
 package pages;
 
+import elements.Button;
 import lombok.extern.log4j.Log4j2;
 import models.TestCase;
 import org.openqa.selenium.By;
@@ -13,7 +14,6 @@ public class TestCaseInfoPage extends BasePage {
 
     public TestCase getTestCaseInfo() {
         TestCase testCase = TestCase.builder()
-
                 .setTitle(driver.findElement(By.cssSelector(".content-header-title.page_title")).getText())
                 .setSection(driver.findElement(By.xpath("//div[@class = 'content-breadcrumb']")).getText())
                 .setType(driver.findElement(By.id("cell_type_id")).getText().substring(5))
