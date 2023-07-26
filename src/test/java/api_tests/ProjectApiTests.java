@@ -12,7 +12,7 @@ import java.io.File;
 public class ProjectApiTests extends BaseApiTest {
     private int projectId;
 
-    @BeforeTest
+    @BeforeTest(alwaysRun = true)
     public void addNewProject() {
         Project project = Project.builder()
                 .setName("New project")
@@ -24,14 +24,14 @@ public class ProjectApiTests extends BaseApiTest {
         projectId = response.getBody().jsonPath().getInt("id");
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, groups = "api")
     public void getProject() {
         Response response = projectController.getProject(projectId);
         Assert.assertEquals(response.jsonPath().getString("name"), "New project");
     }
 
 
-    @Test(priority = 2)
+    @Test(priority = 2, groups = "api")
     public void createProjectFromFile() {
         File file = new File(System.getProperty("user.dir") + "/src/test/resources/requestProjectBody.json");
         Response response = projectController.addProject(file);
@@ -39,7 +39,7 @@ public class ProjectApiTests extends BaseApiTest {
 
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, groups = "api")
     public void createProject() {
         Project project = Project.builder()
                 .setName("New project")
@@ -52,7 +52,7 @@ public class ProjectApiTests extends BaseApiTest {
         Assert.assertEquals(response.getBody().as(Project.class, ObjectMapperType.GSON), project);
     }
 
-    @Test(priority = 4)
+    @Test(priority = 4, groups = "api")
     public void updateProject() {
         Project project = Project.builder()
                 .setName("Updated Project")
@@ -65,7 +65,7 @@ public class ProjectApiTests extends BaseApiTest {
         Assert.assertEquals(response.getBody().as(Project.class, ObjectMapperType.GSON), project);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 5, groups = "api")
     public void deleteProject() {
         Response response = projectController.deleteProject(projectId);
         Assert.assertEquals(response.getStatusCode(), 200);
