@@ -16,7 +16,7 @@ public class MilestonesPage extends BasePage {
         super(driver);
     }
 
-    private By allMilesLocator =By.cssSelector(".summary-title");
+    private By allMilesLocator = By.cssSelector(".summary-title");
 
     private String deleteMilestonesButton = ".icon-small-delete";
 

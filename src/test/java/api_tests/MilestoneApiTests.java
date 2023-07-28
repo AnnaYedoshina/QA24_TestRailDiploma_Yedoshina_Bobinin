@@ -4,6 +4,7 @@ import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
 import models.Milestone;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -12,7 +13,7 @@ public class MilestoneApiTests extends BaseApiTest {
     private final static String NAME = "Release 1.0";
     private int milestoneId;
 
-    @BeforeTest(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void addNewMilestone() {
         Milestone milestone = Milestone.builder()
                 .setName("Release 1.0")
@@ -24,14 +25,14 @@ public class MilestoneApiTests extends BaseApiTest {
 
     }
 
-    @Test(priority = 1, groups = "api")
+    @Test(description = "Check if the milestone can be gotten by API", priority = 1, groups = "api")
     public void getMilestone() {
         Response response = milestoneController.getMilestone(milestoneId);
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.jsonPath().getString("name"), NAME);
     }
 
-    @Test(priority = 2, groups = "api")
+    @Test(description = "Check if the milestone can be created by API", priority = 2, groups = "api")
     public void addMilestone() {
         Milestone milestone = Milestone.builder()
                 .setName("Release 1.0")
@@ -43,7 +44,7 @@ public class MilestoneApiTests extends BaseApiTest {
         Assert.assertEquals(response.getBody().as(Milestone.class, ObjectMapperType.GSON), milestone);
     }
 
-    @Test(priority = 3, groups = "api")
+    @Test(description = "Check if the milestone can be updated by API", priority = 3, groups = "api")
     public void updateMilestone() {
         Milestone milestone = Milestone.builder()
                 .setName("Release 1.1")
@@ -56,7 +57,7 @@ public class MilestoneApiTests extends BaseApiTest {
     }
 
 
-    @Test(priority = 4, groups = "api")
+    @Test(description = "Check if the milestone can be deleted by API", priority = 4, groups = "api")
     public void deleteMilestone() {
         Response response = milestoneController.deleteMilestone(milestoneId);
         Assert.assertEquals(response.getStatusCode(), 200);

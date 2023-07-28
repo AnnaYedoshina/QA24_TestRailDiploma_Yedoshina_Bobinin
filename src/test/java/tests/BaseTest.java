@@ -1,12 +1,10 @@
 package tests;
 
 import api_tests.BaseApiTest;
-import com.google.gson.JsonObject;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import org.apache.http.protocol.HTTP;
+import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -18,10 +16,7 @@ import utils.InvokedListener;
 import utils.PropertyReader;
 
 import java.time.Duration;
-
-import static io.restassured.RestAssured.given;
-import static org.apache.http.HttpStatus.SC_OK;
-
+@Log4j2
 @Listeners({InvokedListener.class})
 public abstract class BaseTest extends BaseApiTest {
     protected static final String BASE_URL = PropertyReader.getProperty("base_url");
@@ -39,10 +34,13 @@ public abstract class BaseTest extends BaseApiTest {
     protected AddedTestCasePage addedTestCasePage;
     protected TestCasesPage testCasesPage;
     protected AddTestRunPage addTestRunPage;
-    protected AddMilestonePage addMilestonePage;
     protected TestCaseInfoPage testCaseInfoPage;
     protected MilestonesPage milestonesPage;
-    protected AddProjectPage addProjectPage;
+    protected DashboardPage dashboardPage;
+    protected ProjectCreationPage projectCreationPage;
+    protected AdministrationPage administrationPage;
+    protected TestCasesTab testCasesTab;
+    protected MilestonesTab milestonesTab;
 
     @Parameters({"browserName"})
     @BeforeClass(alwaysRun = true)
@@ -64,11 +62,13 @@ public abstract class BaseTest extends BaseApiTest {
         addedTestCasePage = new AddedTestCasePage(driver);
         testCasesPage = new TestCasesPage(driver);
         addTestRunPage = new AddTestRunPage(driver);
-        addMilestonePage = new AddMilestonePage(driver);
         testCaseInfoPage = new TestCaseInfoPage(driver);
         milestonesPage = new MilestonesPage(driver);
-        addProjectPage = new AddProjectPage(driver);
-
+        dashboardPage = new DashboardPage(driver);
+        projectCreationPage = new ProjectCreationPage(driver);
+        administrationPage = new AdministrationPage(driver);
+        testCasesTab = new TestCasesTab(driver);
+        milestonesTab = new MilestonesTab(driver);
     }
 
     @AfterClass(alwaysRun = true)
@@ -83,8 +83,16 @@ public abstract class BaseTest extends BaseApiTest {
 
     @AfterMethod(alwaysRun = true)
     public void clearCookies() {
-        driver.manage().deleteAllCookies();
-        ((JavascriptExecutor) driver).executeScript(String.format("window.localStorage.clear();"));
-        ((JavascriptExecutor) driver).executeScript(String.format("window.sessionStorage.clear();"));
+        try {
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+            driver.switchTo().defaultContent();
+        } catch (NoAlertPresentException e) {
+            e.printStackTrace();
+        }
+            driver.switchTo().defaultContent();
+            driver.manage().deleteAllCookies();
+            ((JavascriptExecutor) driver).executeScript(String.format("window.localStorage.clear();"));
+            ((JavascriptExecutor) driver).executeScript(String.format("window.sessionStorage.clear();"));
+        }
     }
-}
