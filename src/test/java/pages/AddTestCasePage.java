@@ -29,7 +29,7 @@ public class AddTestCasePage extends BasePage {
     private static final By TYPE = By.id("type_id_chzn");
     private static final By PRIORITY = By.id("priority_id_chzn");
     private static final By AUTOMATION_TYPE = By.id("custom_automation_type_chzn");
-    private By errorMessageLocator = By.xpath("//div[@class = 'message message-error']");
+    private static final By errorMessageLocator = By.xpath("//div[@class = 'message message-error']");
 
     @Step("Filling out test case '{testCase.title}'")
     public void fillingOutTestCase(TestCase testCase) {

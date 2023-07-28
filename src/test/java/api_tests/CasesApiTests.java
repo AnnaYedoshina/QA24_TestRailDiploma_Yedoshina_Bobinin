@@ -3,9 +3,11 @@ package api_tests;
 import com.github.javafaker.Faker;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
+import models.Project;
 import models.Section;
 import models.Case;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -16,16 +18,24 @@ public class CasesApiTests extends BaseApiTest {
     protected int sectionId;
     static Faker faker = new Faker();
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void addNewTestCase() {
+        Project project = Project.builder()
+                .setName("TestProject")
+                .setAnnouncement("Project for testing")
+                .setShowAnnouncement(false)
+                .setSuiteMode(1)
+                .build();
+        Response responseProject = projectController.addProject(project);
+        projectId = responseProject.getBody().jsonPath().getInt("id");
         Section section = Section.builder()
                 .setName("Test section")
                 .setDescription("Our test section")
                 .setParentId("")
                 .setSuiteId(SUITE_ID)
                 .build();
-        Response response = sectionController.addSection(section, projectId);
-        sectionId = response.getBody().jsonPath().getInt("id");
+        Response responseSection = sectionController.addSection(section, projectId);
+        sectionId = responseSection.getBody().jsonPath().getInt("id");
         Case testCase = Case.builder()
                 .setTitle(title)
                 .setEstimate("2m")
@@ -38,7 +48,7 @@ public class CasesApiTests extends BaseApiTest {
         caseId = responseCase.getBody().jsonPath().getInt("id");
     }
 
-    @Test(priority = 1, groups = "api")
+    @Test(description = "Check if the test case can be created by API", priority = 1, groups = "api")
     public void addTestCase() {
         Case testCase = Case.builder()
                 .setTitle(title)
@@ -53,14 +63,14 @@ public class CasesApiTests extends BaseApiTest {
         Assert.assertEquals(response.getBody().as(Case.class, ObjectMapperType.GSON), testCase);
     }
 
-    @Test(priority = 2, groups = "api")
+    @Test(description = "Check if the test case can be gotten by API", priority = 2, groups = "api")
     public void getTestCase() {
         Response response = casesController.getTestCase(caseId);
         Assert.assertEquals(response.getStatusCode(), 200);
         Assert.assertEquals(response.jsonPath().getString("title"), title);
     }
 
-    @Test(priority = 3, groups = "api")
+    @Test(description = "Check if the test case can be updated by API", priority = 3, groups = "api")
     public void updateTestCase() {
         Case testCase = Case.builder()
                 .setTitle("Updated testcase")
@@ -75,7 +85,7 @@ public class CasesApiTests extends BaseApiTest {
         Assert.assertEquals(response.getBody().as(Case.class, ObjectMapperType.GSON), testCase);
     }
 
-    @Test(priority = 4, groups = "api")
+    @Test(description = "Check if the test case can be deleted by API", priority = 4, groups = "api")
     public void deleteNewTestCase() {
         Response response = casesController.deleteTestCase(caseId);
         Assert.assertEquals(response.getStatusCode(), 200);

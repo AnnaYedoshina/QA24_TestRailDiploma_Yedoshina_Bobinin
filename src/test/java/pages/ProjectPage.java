@@ -12,11 +12,13 @@ public class ProjectPage extends BasePage {
         super(driver);
     }
 
+    private static final By ADD_TEST_CASE = By.id("sidebar-cases-add");
     public String addTestCaseButtonId = "sidebar-cases-add";
     public String testCasesButtonId = "sidebar-cases-overview";
 
     public String addTestRunsButtonId = "sidebar-runs-add";
-    public String addMilestoneButtonId = "sidebar-milestones-add";
+    private static final By CASE_TAB = By.id("navigation-suites");
+    private static final By MILESTONE_TAB = By.id("navigation-milestones");
 
 
     @Step
@@ -30,7 +32,6 @@ public class ProjectPage extends BasePage {
         new Button(driver, addTestCaseButtonId).click();
 
     }
-
     @Step
     public void clickTestCasesButton() {
         log.info("Clicking testCasesButton");
@@ -42,11 +43,14 @@ public class ProjectPage extends BasePage {
         log.info("Clicking addTestRunsButton");
         new Button(driver, addTestRunsButtonId).click();
     }
+    public void openCaseTab() {
+        log.info("Opening page containing Sections and Cases");
+        new Button(driver, CASE_TAB).click();
+    }
 
-    @Step
-    public void clickAddMilestoneButton() {
-        log.info("Clicking addMilestoneButton");
-        new Button(driver, addMilestoneButtonId).click();
+    public void openMilestoneTab() {
+        log.info("Opening page containing Sections and Cases");
+        new Button(driver, MILESTONE_TAB).click();
     }
 
 
