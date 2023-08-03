@@ -14,6 +14,7 @@ public class LoginPage extends BasePage {
 
         super(driver);
     }
+
     private String emailInputId = "name";
     private String passwordInputId = "password";
     private String loginButtonId = "button_primary";

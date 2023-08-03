@@ -27,17 +27,6 @@ public class DashboardPage extends BasePage {
         driver.get(BASE_URL + "index.php?/dashboard");
     }
 
-    public String getHeader() {
-        return driver.findElement(TITLE).getText().toLowerCase();
-    }
-
-    @Step("Logout")
-    public void logout() {
-        log.info("Click 'Logout' button");
-        new Button(driver, USER_MENU).click();
-        new Button(driver, LOGOUT_BUTTON).click();
-    }
-
     public void clickCreateProjectButton() {
         log.info("Click 'Add project' button");
         new Button(driver, ADD_PROJECT_BUTTON).click();
@@ -47,14 +36,15 @@ public class DashboardPage extends BasePage {
     public boolean isProjectExist(String projectName) {
         log.info("Checking the existence of the project '{}'", projectName);
         List<WebElement> projectsList = driver.findElements(ALL_PROJECTS);
-        boolean isProjectExist = false;
         for (WebElement project : projectsList) {
             if (project.getText().equals(projectName)) {
-                isProjectExist = true;
+                return true;
+
             }
         }
-        return isProjectExist;
+        return false;
     }
+
 
     public void openProject(String projectName) {
         log.info("Opening project '{}'", projectName);
@@ -62,3 +52,4 @@ public class DashboardPage extends BasePage {
     }
 
 }
+

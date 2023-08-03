@@ -12,19 +12,9 @@ public class ProjectPage extends BasePage {
         super(driver);
     }
 
-    private static final By ADD_TEST_CASE = By.id("sidebar-cases-add");
     public String addTestCaseButtonId = "sidebar-cases-add";
-    public String testCasesButtonId = "sidebar-cases-overview";
-
-    public String addTestRunsButtonId = "sidebar-runs-add";
     private static final By CASE_TAB = By.id("navigation-suites");
     private static final By MILESTONE_TAB = By.id("navigation-milestones");
-
-
-    @Step
-    public boolean isTestCaseButtonDisplayed() {
-        return driver.findElement(By.id(addTestCaseButtonId)).isDisplayed();
-    }
 
     @Step
     public void clickAddTestCasesLink() {
@@ -32,17 +22,7 @@ public class ProjectPage extends BasePage {
         new Button(driver, addTestCaseButtonId).click();
 
     }
-    @Step
-    public void clickTestCasesButton() {
-        log.info("Clicking testCasesButton");
-        new Button(driver, testCasesButtonId).click();
-    }
 
-    @Step
-    public void clickAddTestRunsButton() {
-        log.info("Clicking addTestRunsButton");
-        new Button(driver, addTestRunsButtonId).click();
-    }
     public void openCaseTab() {
         log.info("Opening page containing Sections and Cases");
         new Button(driver, CASE_TAB).click();

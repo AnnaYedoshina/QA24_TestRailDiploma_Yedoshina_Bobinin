@@ -29,11 +29,13 @@ public class AddTestCasePage extends BasePage {
     private static final By TYPE = By.id("type_id_chzn");
     private static final By PRIORITY = By.id("priority_id_chzn");
     private static final By AUTOMATION_TYPE = By.id("custom_automation_type_chzn");
-    private static final By errorMessageLocator = By.xpath("//div[@class = 'message message-error']");
+    private static final By ERROR_MESSAGE_LOCATOR = By.xpath("//div[@class = 'message message-error']");
+    private static final By PENDO_IMAGE = By.xpath("//img[contains(@id,'pendo-image-badge')]");
 
     @Step("Filling out test case '{testCase.title}'")
     public void fillingOutTestCase(TestCase testCase) {
         log.info(String.format("Filling out testCase = %s", testCase));
+        wait.until(ExpectedConditions.elementToBeClickable(PENDO_IMAGE));
         new Input(driver, TITLE).setValue(testCase.getTitle());
         new Dropdown(driver, SECTION).selectOptionByText(testCase.getSection().toString(), false);
         new Dropdown(driver, TEMPLATE).selectOptionByText(testCase.getTemplate(), false);
@@ -56,7 +58,7 @@ public class AddTestCasePage extends BasePage {
     @Step
     public String gerErrorMessageText() {
         log.info("Searching for error message");
-        return driver.findElement(errorMessageLocator).getText();
+        return driver.findElement(ERROR_MESSAGE_LOCATOR).getText();
 
     }
 

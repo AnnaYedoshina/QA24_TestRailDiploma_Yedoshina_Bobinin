@@ -8,7 +8,6 @@ import models.Section;
 import models.Case;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class CasesApiTests extends BaseApiTest {
