@@ -2,29 +2,25 @@ package tests;
 
 import models.TestCase;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utils.TestDataGenerator;
 
 public class TestCaseTests extends BaseTest {
     private static final String TITLE = "Позитивное тестирование формы Login";
-    private String expectedErrorMessage = "Field Title is a required field.";
+    private static final String EXPECTED_ERROR_MESSAGE = "Field Title is a required field.";
 
-    @Test
-    public void positiveAddTestCaseTest() {
-        TestCase actualTestCase = TestCase.builder()
-                .setTitle(TITLE)
-                .setSection("Test Cases")
-                .setType("Other")
-                .setPriority("Medium")
-                .setEstimate("30 minutes")
-                .setReferences("qwe")
-                .setAutomationType("None")
-                .setPreconditions("Открыта форма Login на сайте TestRail")
-                .setSteps("Заполнить поле email. Заполнить поле password. Нажать кнопку login")
-                .setExpectedResult("Пользователь авторизован")
-                .build();
+    @BeforeMethod(alwaysRun = true)
+    public void addTestCase() {
         loginPage.logIn(USERNAME, PASSWORD);
         allProjectsPage.openProjectByName(NAME);
         projectPage.clickAddTestCasesLink();
+
+    }
+
+    @Test(description = "Check if the test case can be created", groups = "smoke")
+    public void positiveAddTestCaseTest() {
+        TestCase actualTestCase = TestDataGenerator.positiveTestCaseGeneration(TITLE);
         addTestCasePage.fillingOutTestCase(actualTestCase);
         addTestCasePage.clickAddTestCaseButton();
         Assert.assertTrue(addedTestCasePage.isAddAnotherLinkDisplayed());
@@ -32,56 +28,13 @@ public class TestCaseTests extends BaseTest {
         Assert.assertEquals(expectedTestCase, actualTestCase);
     }
 
-    @Test
+    @Test(description = "Check if the test case can not be created without title", groups = "smoke")
     public void negativeAddTestCaseTest() {
-        TestCase testCase = TestCase.builder()
-                .setTitle("")
-                .setSection("Test Cases")
-                .setType("Other")
-                .setPriority("Medium")
-                .setEstimate("30 minutes")
-                .setReferences("qwe")
-                .setAutomationType("None")
-                .setPreconditions("Открыта форма Login на сайте TestRail")
-                .setSteps("Заполнить поле email. Заполнить поле password. Нажать кнопку login")
-                .setExpectedResult("Пользователь авторизован")
-                .build();
-        loginPage.logIn(USERNAME, PASSWORD);
-        allProjectsPage.openProjectByName(NAME);
-        projectPage.clickAddTestCasesLink();
+        TestCase testCase = TestDataGenerator.negativeTestCaseGeneration("");
         addTestCasePage.fillingOutTestCase(testCase);
         addTestCasePage.clickAddTestCaseButton();
-        Assert.assertEquals(addTestCasePage.gerErrorMessageText(), expectedErrorMessage);
+        Assert.assertEquals(addTestCasePage.gerErrorMessageText(), EXPECTED_ERROR_MESSAGE);
 
     }
-
-    @Test
-    public void deleteTestCaseTest() {
-        TestCase actualTestCase = TestCase.builder()
-                .setTitle("Позитивное тестирование формы Login")
-                .setSection("Test Cases")
-                .setType("Other")
-                .setPriority("Medium")
-                .setEstimate("30 minutes")
-                .setReferences("qwe")
-                .setAutomationType("None")
-                .setPreconditions("Открыта форма Login на сайте TestRail")
-                .setSteps("Заполнить поле email. Заполнить поле password. Нажать кнопку login")
-                .setExpectedResult("Пользователь авторизован")
-                .build();
-        loginPage.logIn(USERNAME, PASSWORD);
-        allProjectsPage.openProjectByName(NAME);
-        projectPage.clickAddTestCasesLink();
-        addTestCasePage.fillingOutTestCase(actualTestCase);
-        addTestCasePage.clickAddTestCaseButton();
-        testCasesPage.clickTestCasesButton();
-        testCasesPage.clickEditTestCaseByName(TITLE);
-        testCasesPage.clickDeleteButton();
-        testCasesPage.clickMarkAsDeletedButton();
-        ;
-
-
-    }
-
 
 }

@@ -1,10 +1,10 @@
 package pages;
 
-import elements.Button;
 import lombok.extern.log4j.Log4j2;
 import models.TestCase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Log4j2
 public class TestCaseInfoPage extends BasePage {
@@ -12,7 +12,10 @@ public class TestCaseInfoPage extends BasePage {
         super(driver);
     }
 
+    private static final By PENDO_IMAGE = By.xpath("//img[contains(@id,'pendo-image-badge')]");
+
     public TestCase getTestCaseInfo() {
+        wait.until(ExpectedConditions.elementToBeClickable(PENDO_IMAGE));
         TestCase testCase = TestCase.builder()
                 .setTitle(driver.findElement(By.cssSelector(".content-header-title.page_title")).getText())
                 .setSection(driver.findElement(By.xpath("//div[@class = 'content-breadcrumb']")).getText())

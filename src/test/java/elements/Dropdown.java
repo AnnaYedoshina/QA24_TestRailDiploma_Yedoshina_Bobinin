@@ -55,4 +55,6 @@ public class Dropdown {
     private void expand() {
         element.findMyElement(By.cssSelector("a.chzn-single div b")).click();
     }
+
 }
+

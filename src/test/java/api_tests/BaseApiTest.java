@@ -1,17 +1,12 @@
 package api_tests;
 
-import com.github.javafaker.Faker;
 import controllers.MilestoneController;
 import controllers.ProjectController;
 import controllers.SectionController;
 import controllers.CasesController;
 import io.restassured.response.Response;
-import models.Case;
 import models.Project;
-import models.Section;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 

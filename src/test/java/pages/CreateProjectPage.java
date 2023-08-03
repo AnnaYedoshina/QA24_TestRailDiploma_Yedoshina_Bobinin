@@ -8,8 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 @Log4j2
-public class ProjectCreationPage extends BasePage {
-    public ProjectCreationPage(WebDriver driver) {
+public class CreateProjectPage extends BasePage {
+    public CreateProjectPage(WebDriver driver) {
         super(driver);
     }
 
@@ -29,6 +29,8 @@ public class ProjectCreationPage extends BasePage {
     @Step("Changing a primary project on project with title '{projectName}'")
     public void updateProject(String projectName, String projectAnnouncement) {
         log.info("Updating project to project with title '{}'", projectName);
+        new Input(driver, PROJECT_NAME).clearValue();
+        new Input(driver, PROJECT_NAME).setValue(projectName);
         new Input(driver, PROJECT_ANNOUNCEMENT).clearValue();
         new Input(driver, PROJECT_ANNOUNCEMENT).setValue(projectAnnouncement);
         new Button(driver, ADD_PROJECT_BUTTON).click();

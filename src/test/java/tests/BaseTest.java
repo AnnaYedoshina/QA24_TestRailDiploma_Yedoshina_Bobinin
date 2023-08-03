@@ -1,6 +1,7 @@
 package tests;
 
 import api_tests.BaseApiTest;
+import com.github.javafaker.Faker;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.JavascriptExecutor;
@@ -16,6 +17,7 @@ import utils.InvokedListener;
 import utils.PropertyReader;
 
 import java.time.Duration;
+
 @Log4j2
 @Listeners({InvokedListener.class})
 public abstract class BaseTest extends BaseApiTest {
@@ -33,14 +35,13 @@ public abstract class BaseTest extends BaseApiTest {
     protected ProjectPage projectPage;
     protected AddedTestCasePage addedTestCasePage;
     protected TestCasesPage testCasesPage;
-    protected AddTestRunPage addTestRunPage;
     protected TestCaseInfoPage testCaseInfoPage;
-    protected MilestonesPage milestonesPage;
     protected DashboardPage dashboardPage;
-    protected ProjectCreationPage projectCreationPage;
+    protected CreateProjectPage createProjectPage;
     protected AdministrationPage administrationPage;
     protected TestCasesTab testCasesTab;
     protected MilestonesTab milestonesTab;
+    static Faker faker = new Faker();
 
     @Parameters({"browserName"})
     @BeforeClass(alwaysRun = true)
@@ -61,11 +62,9 @@ public abstract class BaseTest extends BaseApiTest {
         addTestCasePage = new AddTestCasePage(driver);
         addedTestCasePage = new AddedTestCasePage(driver);
         testCasesPage = new TestCasesPage(driver);
-        addTestRunPage = new AddTestRunPage(driver);
         testCaseInfoPage = new TestCaseInfoPage(driver);
-        milestonesPage = new MilestonesPage(driver);
         dashboardPage = new DashboardPage(driver);
-        projectCreationPage = new ProjectCreationPage(driver);
+        createProjectPage = new CreateProjectPage(driver);
         administrationPage = new AdministrationPage(driver);
         testCasesTab = new TestCasesTab(driver);
         milestonesTab = new MilestonesTab(driver);
@@ -79,20 +78,18 @@ public abstract class BaseTest extends BaseApiTest {
     @BeforeMethod(alwaysRun = true)
     public void navigate() {
         driver.get(BASE_URL);
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void clearCookies() {
         try {
             Alert alert = driver.switchTo().alert();
             alert.accept();
             driver.switchTo().defaultContent();
         } catch (NoAlertPresentException e) {
-            e.printStackTrace();
-        }
-            driver.switchTo().defaultContent();
-            driver.manage().deleteAllCookies();
-            ((JavascriptExecutor) driver).executeScript(String.format("window.localStorage.clear();"));
-            ((JavascriptExecutor) driver).executeScript(String.format("window.sessionStorage.clear();"));
         }
     }
+
+    @AfterMethod(alwaysRun = true)
+    public void clearCookies() {
+        driver.manage().deleteAllCookies();
+        ((JavascriptExecutor) driver).executeScript(String.format("window.localStorage.clear();"));
+        ((JavascriptExecutor) driver).executeScript(String.format("window.sessionStorage.clear();"));
+    }
+}
