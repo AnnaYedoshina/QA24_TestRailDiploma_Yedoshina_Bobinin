@@ -34,7 +34,6 @@ public abstract class BaseTest extends BaseApiTest {
     protected AddTestCasePage addTestCasePage;
     protected ProjectPage projectPage;
     protected AddedTestCasePage addedTestCasePage;
-    protected TestCasesPage testCasesPage;
     protected TestCaseInfoPage testCaseInfoPage;
     protected DashboardPage dashboardPage;
     protected CreateProjectPage createProjectPage;
@@ -61,7 +60,6 @@ public abstract class BaseTest extends BaseApiTest {
         projectPage = new ProjectPage(driver);
         addTestCasePage = new AddTestCasePage(driver);
         addedTestCasePage = new AddedTestCasePage(driver);
-        testCasesPage = new TestCasesPage(driver);
         testCaseInfoPage = new TestCaseInfoPage(driver);
         dashboardPage = new DashboardPage(driver);
         createProjectPage = new CreateProjectPage(driver);
